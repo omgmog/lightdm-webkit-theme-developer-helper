@@ -19,9 +19,9 @@ if (!('lightdm' in window)) {
     lightdm.default_language = lightdm.languages[0];
     lightdm.layouts = [
         {
-            name: "test",
-            short_description: "test description",
-            short_description:"really long epic description"
+            name: "Keyboard Layout 1",
+            short_description: "A keyboard layout",
+            long_description: "This is a layout of the keyboard"
         }
     ];
     lightdm.default_layout = lightdm.layouts[0];
@@ -46,6 +46,7 @@ if (!('lightdm' in window)) {
     lightdm.can_hibernate = true;
     lightdm.can_restart = true;
     lightdm.can_shutdown = true;
+    lightdm.lock_hint = false;
 
     lightdm.users = [
         {
@@ -96,7 +97,7 @@ if (!('lightdm' in window)) {
 
     lightdm.provide_secret = function (secret) {
         if (typeof lightdm._username == 'undefined' || !lightdm._username) {
-            throw "must call start_authentication first"
+            throw "must call start_authentication first";
         }
         _lightdm_mock_check_argument_length(arguments, 1);
 
@@ -165,10 +166,10 @@ if (!('lightdm' in window)) {
             throw "The system is not authenticated";
         }
         if (user !== lightdm.authentication_user) {
-            throw "this user is not authenticated";
+            throw user+" is not authenticated";
         }
 
-        alert("logged in successfully!!");
+        alert("logged '"+user+"' in to '"+session+"' successfully!");
         document.location.reload(true);
     };
 
@@ -181,12 +182,13 @@ if (!('lightdm' in window)) {
         );
     }
 }
+
 // Helper functions
 var _lightdm_mock_check_argument_length = function (args, length) {
     if (args.length != length) {
         throw "incorrect number of arguments in function call";
     }
-}
+};
 
 var _lightdm_mock_get_user = function (username) {
     var user = null;
@@ -197,4 +199,4 @@ var _lightdm_mock_get_user = function (username) {
         }
     }
     return user;
-}
+};
